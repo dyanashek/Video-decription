@@ -27,8 +27,11 @@ def upload_file():
         file_name = str(uuid.uuid4())
         file.save(f'{file_name}.{extension}')
 
-        save_random_frame(f'{file_name}.{extension}', f'{file_name}.jpeg')
-        os.remove(f'{file_name}.{extension}')
+        try:
+            save_random_frame(f'{file_name}.{extension}', f'{file_name}.jpeg')
+            os.remove(f'{file_name}.{extension}')
+        except:
+            return render_template('index.html', description = 'Неизвестная ошибка.')
 
         result = describe_image(f'{file_name}.jpeg')
         os.remove(f'{file_name}.jpeg')
